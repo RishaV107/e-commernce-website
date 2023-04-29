@@ -7,28 +7,21 @@ import {
   CardMedia,
   Stack,
 } from "@mui/material";
-import { useEffect } from "react";
+
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { addCart } from "../slices/cart";
 
 const ProductDetailsPage = () => {
-  const navigator = useNavigation();
   const { state: product } = useLocation();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("###", product);
-  }, [product]);
-
   const handleAddToCart = () => {
     dispatch(addCart(product));
-    navigator("/cart");
   };
 
   const handleBuyNow = () => {
     console.log("Buy now clicked!");
-    // Perform buy now action
   };
 
   return (
@@ -48,6 +41,7 @@ const ProductDetailsPage = () => {
               minWidth: 200,
               height: "60%",
               marginTop: "150px",
+              objectFit: "scale-down",
             }}
             image={product.image}
             alt={product.title}

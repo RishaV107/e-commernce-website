@@ -27,25 +27,6 @@ const Dashboard = () => {
               rating={product.rating.rate}
               count={product.rating.count}
             />
-            {/* <Card sx={{ height: "100%" }}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={product.image}
-                alt={product.title}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h6" component="div">
-                  {product.title}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary">
-                  Category: {product.category}
-                </Typography>
-                <Typography variant="h6" color="primary">
-                  Price: ${product.price}
-                </Typography>
-              </CardContent>
-            </Card> */}
           </Grid>
         ))}
       </Grid>

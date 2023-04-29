@@ -13,7 +13,6 @@ const cartSlice = createSlice({
       state.cart;
     },
     setCart: (state, { payload }) => {
-      console.log("### payload", payload);
       state.cart = payload;
     },
     addCart: (state, { payload }) => {
