@@ -1,0 +1,36 @@
+.appBar {
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .appBar {
+    width: calc(100% - 240px);
+    margin-left: 240px;
+  }
+}
+
+.menuButton {
+  margin-right: 16px;
+}
+
+@media (min-width: 600px) {
+  .menuButton {
+    display: none;
+  }
+}
+
+.title {
+  flex-grow: 1;
+}
+
+/* .drawer {
+  width: ${drawerWidth}px;
+} */
+
+.drawer .MuiListItemIcon-root {
+  color: inherit;
+}
+
+.drawer .MuiListItemText-root {
+  color: inherit;
+}
