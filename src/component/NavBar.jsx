@@ -2,6 +2,7 @@ import {
   AppBar,
   Badge,
   Button,
+  CardActionArea,
   Drawer,
   IconButton,
   List,
@@ -16,18 +17,39 @@ import { useEffect, useState } from "react";
 
 import { fetchCategories, categoriesSelector } from "../slices/categories";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { cartSelector } from "../slices/cart";
+import { fetchProducts } from "../slices/products";
 
 const NavBar = () => {
+  const navigator = useNavigate();
   const dispatch = useDispatch();
   const { categories } = useSelector(categoriesSelector);
+  const { cart } = useSelector(cartSelector);
+  const [localCart, setLocalCart] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
+  useEffect(() => {
+    setLocalCart([...new Set(cart)]);
+  }, [cart]);
+
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
+  };
+  const handleClick = () => {
+    navigator("/");
+  };
+  const handleCartClick = () => {
+    navigator("/cart");
+  };
+  const handleDrawerClick = (e) => {
+    // console.log(e.target.value);
+    setIsDrawerOpen(false);
+    dispatch(fetchProducts(e.target.value));
   };
 
   return (
@@ -43,11 +65,17 @@ const NavBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap className="title">
-            E-commerce Company
-          </Typography>
-          <IconButton color="inherit" aria-label="shopping cart">
-            <Badge badgeContent={4} color="error">
+          <CardActionArea onClick={handleClick}>
+            <Typography variant="h6" noWrap className="title">
+              E-commerce Company
+            </Typography>
+          </CardActionArea>
+          <IconButton
+            color="inherit"
+            aria-label="shopping cart"
+            onClick={handleCartClick}
+          >
+            <Badge badgeContent={localCart.length} color="error">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
@@ -67,7 +95,13 @@ const NavBar = () => {
             return (
               <ListItem key={item}>
                 <ListItemText key={item}>
-                  <Button variant="text">{item}</Button>
+                  <Button
+                    value={item}
+                    variant="text"
+                    onClick={handleDrawerClick}
+                  >
+                    {item}
+                  </Button>
                 </ListItemText>
               </ListItem>
             );

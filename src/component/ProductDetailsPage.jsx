@@ -8,25 +8,22 @@ import {
   Stack,
 } from "@mui/material";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigation } from "react-router-dom";
+import { addCart } from "../slices/cart";
 
 const ProductDetailsPage = () => {
+  const navigator = useNavigation();
   const { state: product } = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("###", product);
   }, [product]);
 
-  //   const product = {
-  //     title: "Product Title",
-  //     price: 49.99,
-  //     category: "Electronics",
-  //     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-  //   };
-
   const handleAddToCart = () => {
-    console.log("Add to cart clicked!");
-    // Perform add to cart action
+    dispatch(addCart(product));
+    navigator("/cart");
   };
 
   const handleBuyNow = () => {

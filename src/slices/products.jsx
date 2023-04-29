@@ -30,12 +30,19 @@ export const { getProducts, getProductsSuccess, getProductsFailure } =
 
 export const productsSelector = (state) => state.products;
 
-export function fetchProducts() {
+export function fetchProducts(queryParams = "") {
+  const url =
+    queryParams.length === 0
+      ? "https://fakestoreapi.com/products"
+      : `https://fakestoreapi.com/products/category/${queryParams.replace(
+          / /g,
+          "%20"
+        )}`;
   return async (dispatch) => {
     dispatch(getProducts());
 
     try {
-      const response = await fetch("https://fakestoreapi.com/products");
+      const response = await fetch(url);
 
       const data = await response.json();
 

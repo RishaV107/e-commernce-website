@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import rootReducer from "./slices/index";
 import ProductDetailsPage from "./component/ProductDetailsPage.jsx";
 import NavBar from "./component/NavBar.jsx";
+import CartPage from "./component/CartPage.jsx";
 
 const store = configureStore({ reducer: rootReducer });
 
@@ -21,6 +22,15 @@ const router = createBrowserRouter([
       <>
         <NavBar />
         <ProductDetailsPage />
+      </>
+    ),
+  },
+  {
+    path: "/cart",
+    element: (
+      <>
+        <NavBar />
+        <CartPage />
       </>
     ),
   },
