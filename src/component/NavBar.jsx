@@ -1,21 +1,35 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
+import {
+  AppBar,
+  Badge,
+  Button,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import { useEffect, useState } from "react";
 
-import "./NavBar";
-import { useState } from "react";
-import { Badge } from "@mui/material";
+import { fetchCategories, categoriesSelector } from "../slices/categories";
+import { useDispatch, useSelector } from "react-redux";
 
-const ResponsiveAppBar = () => {
+const NavBar = () => {
+  const dispatch = useDispatch();
+  const { categories, loading } = useSelector(categoriesSelector);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("###", categories);
+    console.log(loading);
+  }, [categories, loading]);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -54,28 +68,19 @@ const ResponsiveAppBar = () => {
         }}
       >
         <List>
-          <ListItem>
-            <ListItemIcon>
-              <MenuIcon />
-            </ListItemIcon>
-            <ListItemText primary="Category 1" />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <MenuIcon />
-            </ListItemIcon>
-            <ListItemText primary="Category 2" />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <MenuIcon />
-            </ListItemIcon>
-            <ListItemText primary="Category 3" />
-          </ListItem>
+          {categories.map((item) => {
+            return (
+              <ListItem key={item}>
+                <ListItemText key={item}>
+                  <Button variant="text">{item}</Button>
+                </ListItemText>
+              </ListItem>
+            );
+          })}
         </List>
       </Drawer>
     </>
   );
 };
 
-export default ResponsiveAppBar;
+export default NavBar;
