@@ -19,17 +19,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const { categories, loading } = useSelector(categoriesSelector);
+  const { categories } = useSelector(categoriesSelector);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log("###", categories);
-    console.log(loading);
-  }, [categories, loading]);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
